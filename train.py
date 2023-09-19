@@ -56,6 +56,9 @@ def train(n_epochs, model, optimizer, loss_fn, train_loader, scheduler, device='
 
 
 def main():
+    # Run the following line in terminal to train
+    # python train.py -z 8 -e 50 -b 2048 -s MLP.8.pth -p loss.MLP.8.png
+
     # set up arg parser
     arg_parser = ArgumentParser()
     arg_parser.add_argument('-z', '--bottleneck')
