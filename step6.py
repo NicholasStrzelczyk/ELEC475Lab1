@@ -13,21 +13,21 @@ def get_user_inputs():
 
     print("1. To select a start image, please enter an integer between 0 and 59999: ")
     user_input = int(input())
-    if user_input < 0 | user_input > 59999:
+    if user_input < 0 or user_input > 59999:
         print("Error: integer is out of bounds! - quitting program...")
         return -1
     inputs[0] = user_input
 
     print("2. To select a end image, please enter an integer between 0 and 59999: ")
     user_input = int(input())
-    if user_input < 0 | user_input > 59999:
+    if user_input < 0 or user_input > 59999:
         print("Error: integer is out of bounds! - quitting program...")
         return -1
     inputs[1] = user_input
 
-    print("3. Please specify the number of interpolations (integer between 1 and 9): ")
+    print("3. Please specify the number of interpolations (integer between 1 and 12): ")
     user_input = int(input())
-    if user_input < 1 | user_input > 9:
+    if user_input < 1 or user_input > 12:
         print("Error: integer is out of bounds! - quitting program...")
         return -1
     inputs[2] = user_input
@@ -41,15 +41,9 @@ def get_reference_image(idx):
     return dataset.data[idx]
 
 
-def get_lerp_weight(n_lerps):
-    # custom weight function based on number of lerps
-    return float((n_lerps / (1.5 * n_lerps * n_lerps)) + 0.15)
-
-
-def get_interpolations_array(start_img, end_img, n_lerps,  model):
-    # initialize array and weight parameter
+def get_interpolations_array(start_img, end_img, n_lerps, lerp_weight,  model):
+    # initialize array
     interpolations = {}
-    lerp_weight = get_lerp_weight(n_lerps)
 
     # make sure gradient calculation is disabled
     with torch.no_grad():
@@ -89,16 +83,17 @@ def display_images(interpolations):
 def run(model):
     # get valid user input integer
     user_inputs = get_user_inputs()
-    if user_inputs[0] == -1 | user_inputs[1] == -1 | user_inputs[2] == -1:
+    if user_inputs[0] == -1 or user_inputs[1] == -1 or user_inputs[2] == -1:
         quit()
 
     # extract interpolation parameters
     start_img = get_reference_image(user_inputs[0])
     end_img = get_reference_image(user_inputs[1])
     n_lerps = user_inputs[2]
+    lerp_weight = 0.2
 
     # generate the tensor array with interpolations
-    img_array = get_interpolations_array(start_img, end_img, n_lerps, model)
+    img_array = get_interpolations_array(start_img, end_img, n_lerps, lerp_weight, model)
 
     # display the resulting images
     display_images(img_array)
