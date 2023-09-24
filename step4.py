@@ -23,7 +23,7 @@ def get_reference_image(idx):
 
 def get_output_image(input_img, model):
     with torch.no_grad():
-        img = torch.flatten(input_img, start_dim=0)
+        img = torch.flatten(input_img, start_dim=0) / 255
         output_img = model.forward(img)
         return np.reshape(output_img, (28, 28))
 
@@ -47,7 +47,7 @@ def run(model):
     source_img = get_reference_image(user_idx)
     output_img = get_output_image(source_img, model)
 
-    # display the image and label for the given index
+    # display the image for the given index
     display_images(source_img, output_img)
 
     return 0

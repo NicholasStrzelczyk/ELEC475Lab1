@@ -64,16 +64,16 @@ def main():
     arg_parser.add_argument('-z', '--bottleneck')
     arg_parser.add_argument('-e', '--n_epochs')
     arg_parser.add_argument('-b', '--batch_size')
-    arg_parser.add_argument('-s', '--saved_model')
-    arg_parser.add_argument('-p', '--saved_plot')
+    arg_parser.add_argument('-s', '--saved_model_path')
+    arg_parser.add_argument('-p', '--saved_plot_path')
     args = arg_parser.parse_args()
 
     # parse args from command line
     bottleneck = int(args.bottleneck)
     n_epochs = int(args.n_epochs)
     batch_size = int(args.batch_size)
-    save_file = args.saved_model
-    plot_file = args.saved_plot
+    save_model_path = args.saved_model_path
+    plot_file_path = args.saved_plot_path
 
     # initializes training data
     train_transform = transforms.Compose([transforms.ToTensor()])
@@ -99,10 +99,10 @@ def main():
         loss_fn=loss_fn,
         train_loader=train_loader,
         scheduler=scheduler,
-        save_file=save_file,
-        plot_file=plot_file
+        save_file=save_model_path,
+        plot_file=plot_file_path
     )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

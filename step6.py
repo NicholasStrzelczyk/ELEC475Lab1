@@ -90,7 +90,7 @@ def run(model):
     start_img = get_reference_image(user_inputs[0])
     end_img = get_reference_image(user_inputs[1])
     n_lerps = user_inputs[2]
-    lerp_weight = 0.2
+    lerp_weight = 0.15
 
     # generate the tensor array with interpolations
     img_array = get_interpolations_array(start_img, end_img, n_lerps, lerp_weight, model)
@@ -99,10 +99,3 @@ def run(model):
     display_images(img_array)
 
     return 0
-
-
-if __name__ == "__main__":
-    my_model = model.AutoencoderMlp4Layer()
-    my_model.load_state_dict(torch.load("MLP.8.pth"))
-    my_model.eval()
-    run(my_model)

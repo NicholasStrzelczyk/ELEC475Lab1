@@ -58,7 +58,7 @@ def run(model):
     noisy_img = get_noisy_image(source_img)
     output_img = get_output_image(noisy_img, model)
 
-    # display the image and label for the given index
+    # display the images for the given index
     display_images(source_img, noisy_img, output_img)
 
     return 0
